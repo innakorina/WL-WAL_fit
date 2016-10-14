@@ -34,6 +34,7 @@ class StringParser
 
         void setString(const std::string& str){
             d_str = str;
+            d_result.clear();
         }
 
         std::vector<std::string>& getResult();

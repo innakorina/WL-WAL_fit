@@ -7,7 +7,37 @@
 	<vector>
 	<unordered_set>
 
-1476414103 source:g:\c++ projects\wl-wal fit\wl-wal_fit\main.cpp
+1476419585 source:g:\c++ projects\wl-wal fit\wl-wal_fit\main.cpp
 	<iostream>
 	"StringParser.h"
+	"MonteCarloFit.h"
+	<vector>
+	<string>
+
+1476420077 g:\c++ projects\wl-wal fit\wl-wal_fit\stringparser.h
+	<string>
+	<vector>
+	<unordered_set>
+
+1476419396 source:g:\c++ projects\wl-wal fit\wl-wal_fit\stringparser.cpp
+	"StringParser.h"
+	<iostream>
+
+1476417045 g:\c++ projects\wl-wal fit\wl-wal_fit\montecarlofit.h
+
+1476413119 g:\c++ projects\wl-wal fit\wl-wal_fit\digamma.cpp
+	<cstdlib>
+	<iostream>
+	<iomanip>
+	<ctime>
+	<cmath>
+
+1253214704 g:\c++ projects\wl-wal fit\wl-wal_fit\randomgenerator.h
+
+1476419816 source:g:\c++ projects\wl-wal fit\wl-wal_fit\montecarlofit.cpp
+	"MonteCarloFit.h"
+	<fstream>
+	<string>
+	"StringParser.h"
+	<iostream>
 
