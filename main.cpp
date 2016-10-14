@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include "Digamma.cpp"
+
 using namespace std;
 
 int main()
@@ -24,6 +26,9 @@ int main()
     MonteCarloFit fitobj;
     fitobj.readDataFile();
     fitobj.printAfterReadingFile();
+
+    int errorflag;
+    std::cout<<"ph(0.1)="<<digamma(0.1, &errorflag)<<"\n";
 
     int temp;
     std::cin>>temp;

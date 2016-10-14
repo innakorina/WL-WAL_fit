@@ -2,7 +2,7 @@
 #define MONTECARLOFIT_H
 
 
-//#include "RandomGenerator.h"
+#include "RandomGenerator.h"
 
 namespace{
     const int ARRAY_MAX = 10000;
@@ -15,7 +15,7 @@ class MonteCarloFit
         double d_sheetConductance[ARRAY_MAX];
         int d_size;
 
-        //RandGenerator d_myRand;
+        RandGenerator d_myRand;
 
     public:
         MonteCarloFit();
