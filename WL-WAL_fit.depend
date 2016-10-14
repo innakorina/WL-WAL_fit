@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1476414020 source:g:\c++ projects\wl-wal fit\wl-wal_fit\src\stringparser.cpp
+	"StringParser.h"
+
+1476414128 g:\c++ projects\wl-wal fit\wl-wal_fit\include\stringparser.h
+	<string>
+	<vector>
+	<unordered_set>
+
+1476414103 source:g:\c++ projects\wl-wal fit\wl-wal_fit\main.cpp
+	<iostream>
+	"StringParser.h"
+
