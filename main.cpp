@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Digamma.cpp"
+#include "RandomGenerator.h"
 
 using namespace std;
 
@@ -29,6 +30,11 @@ int main()
 
     int errorflag;
     std::cout<<"ph(0.1)="<<digamma(0.1, &errorflag)<<"\n";
+    RandGenerator randObj;
+    randObj.SetSeed(3434);
+    for(int i=0; i<10; ++i){
+        std::cout<<randObj.Rand()<<", ";
+    }
 
     int temp;
     std::cin>>temp;

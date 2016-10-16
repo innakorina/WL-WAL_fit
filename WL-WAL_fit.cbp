@@ -23,6 +23,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="MonteCarloFit.cpp" />
+		<Unit filename="MonteCarloFit.h" />
+		<Unit filename="RandomGenerator.cpp" />
+		<Unit filename="RandomGenerator.h" />
+		<Unit filename="StringParser.cpp" />
+		<Unit filename="StringParser.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
