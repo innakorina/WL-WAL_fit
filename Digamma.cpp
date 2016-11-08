@@ -1,3 +1,7 @@
+#ifndef DIGAMMA_CPP
+#define DIGAMMA_CPP
+
+
 # include <cstdlib>
 # include <iostream>
 # include <iomanip>
@@ -15,7 +19,7 @@ void timestamp ( void );
 */
 //****************************************************************************80
 
-double digamma ( double x, int *ifault )
+inline double digamma ( double x, int *ifault )
 
 //****************************************************************************80
 //
@@ -106,7 +110,7 @@ double digamma ( double x, int *ifault )
 }
 //****************************************************************************80
 
-void psi_values ( int *n_data, double *x, double *fx )
+inline void psi_values ( int *n_data, double *x, double *fx )
 
 //****************************************************************************80
 //
@@ -221,7 +225,7 @@ void psi_values ( int *n_data, double *x, double *fx )
 }
 //****************************************************************************80
 
-void timestamp ( )
+inline void timestamp ( )
 
 //****************************************************************************80
 //
@@ -267,3 +271,6 @@ void timestamp ( )
   return;
 # undef TIME_SIZE
 }
+
+
+#endif // DIGAMMA_CPP

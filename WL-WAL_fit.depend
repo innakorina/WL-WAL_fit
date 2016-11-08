@@ -7,41 +7,44 @@
 	<vector>
 	<unordered_set>
 
-1476419585 source:g:\c++ projects\wl-wal fit\wl-wal_fit\main.cpp
+1478575974 source:g:\c++ projects\wl-wal fit\wl-wal_fit\main.cpp
 	<iostream>
 	"StringParser.h"
 	"MonteCarloFit.h"
 	<vector>
 	<string>
+	"Digamma.cpp"
+	"RandomGenerator.h"
 
-1476420077 g:\c++ projects\wl-wal fit\wl-wal_fit\stringparser.h
+1476416477 g:\c++ projects\wl-wal fit\wl-wal_fit\stringparser.h
 	<string>
 	<vector>
 	<unordered_set>
 
-1476419396 source:g:\c++ projects\wl-wal fit\wl-wal_fit\stringparser.cpp
+1476415796 source:g:\c++ projects\wl-wal fit\wl-wal_fit\stringparser.cpp
 	"StringParser.h"
 	<iostream>
 
-1476420403 g:\c++ projects\wl-wal fit\wl-wal_fit\montecarlofit.h
+1478575748 g:\c++ projects\wl-wal fit\wl-wal_fit\montecarlofit.h
 	"RandomGenerator.h"
+	"Digamma.cpp"
 
-1476413119 g:\c++ projects\wl-wal fit\wl-wal_fit\digamma.cpp
+1478576201 g:\c++ projects\wl-wal fit\wl-wal_fit\digamma.cpp
 	<cstdlib>
 	<iostream>
 	<iomanip>
 	<ctime>
 	<cmath>
 
-1476420931 g:\c++ projects\wl-wal fit\wl-wal_fit\randomgenerator.h
+1476417331 g:\c++ projects\wl-wal fit\wl-wal_fit\randomgenerator.h
 
-1476420656 source:g:\c++ projects\wl-wal fit\wl-wal_fit\montecarlofit.cpp
+1478575530 source:g:\c++ projects\wl-wal fit\wl-wal_fit\montecarlofit.cpp
 	"MonteCarloFit.h"
 	<fstream>
 	<string>
 	"StringParser.h"
 	<iostream>
 
-1476420928 source:g:\c++ projects\wl-wal fit\wl-wal_fit\randomgenerator.cpp
+1476417328 source:g:\c++ projects\wl-wal fit\wl-wal_fit\randomgenerator.cpp
 	"RandomGenerator.h"
 
