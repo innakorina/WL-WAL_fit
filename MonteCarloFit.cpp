@@ -9,11 +9,14 @@ MonteCarloFit::MonteCarloFit(): d_size(0)
     d_myRand.SetSeed(3435);
     d_a = 1;
     d_da = 0.1;
-    d_Dtau = 1;
-    d_dDtau = 0.1;
-    d_Dtau_i = 1;
-    d_dDtau_i = 0.1;
-    d_sum_diff_squares = 0xDEADBEEF;
+    d_B_phi = 1;
+    d_dB_phi = 0.1;
+    d_B_SO = 1;
+    d_dB_SO = 0.1;
+    d_B_e = 1;
+    d_dB_e = 0.1;
+
+    d_sum_diff_squares = 1E1000;
 }
 
 MonteCarloFit::~MonteCarloFit()
@@ -43,16 +46,20 @@ bool MonteCarloFit::readDataFile(){
         ++d_size;
     }
 
-    calcSumDiffSquares(d_a, d_Dtau, d_Dtau_i);
+    calcSumDiffSquares(d_a, d_B_phi, d_B_SO, d_B_e);
 }
 
-double MonteCarloFit::calcSumDiffSquares(double a, double Dtau, double Dtau_i) {
+double MonteCarloFit::calcSumDiffSquares(double a, double B_phi, double B_SO, double B_e) {
     double sum = 0;
     for(size_t i=0; i!=d_size; ++i){
-        double diff = sigma(d_field[i], a, Dtau, Dtau_i) - d_sheetConductance[i];
+        double diff = sigma(d_field[i], a, B_phi, B_SO, B_e) - d_sheetConductance[i];
         sum += diff * diff;
     }
     return sum;
+}
+
+void MonteCarloFit::updateSumDiffSquares(){
+    d_sum_diff_squares = calcSumDiffSquares(d_a, d_B_phi, d_B_SO, d_B_e);
 }
 
 void MonteCarloFit::printAfterReadingFile() const{
@@ -64,26 +71,34 @@ void MonteCarloFit::printAfterReadingFile() const{
 
 void MonteCarloFit::fastMonteCarloOnce(){
     double newa = d_a + (d_myRand.Rand() * 2 -1) * d_da;
-    double newSumDiffSquares = calcSumDiffSquares(newa, d_Dtau, d_Dtau_i);
+    double newSumDiffSquares = calcSumDiffSquares(newa, d_B_phi, d_B_SO, d_B_e);
     if(newSumDiffSquares < d_sum_diff_squares){
         //accept newa
         d_a = newa;
         d_sum_diff_squares = newSumDiffSquares;
     }
 
-    double newDtau = d_Dtau + (d_myRand.Rand() * 2 - 1) * d_dDtau;
-    newSumDiffSquares = calcSumDiffSquares(d_a, newDtau, d_Dtau_i);
+    double newB_phi = d_B_phi + (d_myRand.Rand() * 2 - 1) * d_dB_phi;
+    newSumDiffSquares = calcSumDiffSquares(d_a, newB_phi, d_B_SO, d_B_e);
     if(newSumDiffSquares < d_sum_diff_squares){
-        //accept newDtau
-        d_Dtau = newDtau;
+        //accept newB_phi
+        d_B_phi = newB_phi;
         d_sum_diff_squares = newSumDiffSquares;
     }
 
-    double newDtau_i = d_Dtau_i + (d_myRand.Rand() * 2 - 1) * d_dDtau_i;
-    newSumDiffSquares = calcSumDiffSquares(d_a, d_Dtau, newDtau_i);
+    double newB_SO = d_B_SO + (d_myRand.Rand() * 2 - 1) * d_dB_SO;
+    newSumDiffSquares = calcSumDiffSquares(d_a, d_B_phi, newB_SO, d_B_e);
     if(newSumDiffSquares < d_sum_diff_squares){
-        //accept newDtau_i
-        d_Dtau_i = newDtau_i;
+        //accept newB_SO
+        d_B_SO = newB_SO;
+        d_sum_diff_squares = newSumDiffSquares;
+    }
+
+    double newB_e = d_B_e + (d_myRand.Rand() * 2 - 1) * d_dB_e;
+    newSumDiffSquares = calcSumDiffSquares(d_a, d_B_phi, d_B_SO, newB_e);
+    if(newSumDiffSquares < d_sum_diff_squares){
+        //accept newB_e
+        d_B_e = newB_e;
         d_sum_diff_squares = newSumDiffSquares;
     }
 }
@@ -95,9 +110,9 @@ void MonteCarloFit::fastMonteCarloNTimes(int n){
 }
 
 bool MonteCarloFit::plotResult(){
-    double H_max;
-    std::cout<<"H_max = ";
-    std::cin>>H_max;
+    double B_max;
+    std::cout<<"B_max = ";
+    std::cin>>B_max;
     int n;
     std::cout<<"How many points to plot: ";
     std::cin>>n;
@@ -111,12 +126,26 @@ bool MonteCarloFit::plotResult(){
     std::fstream myfile;
     myfile.open(filename.c_str(), std::ios::out);
 
-    double dH = H_max/n;
-    double H_min = dH/1000;
-    for(double H=H_min; H<H_max; H+=dH){
-        double s = sigma(H,d_a,d_Dtau,d_Dtau_i);
-        myfile<<H<<"\t"<<s<<"\n";
+    double dB = B_max/n;
+    double B_min = dB/1000;
+    for(double B=B_min; B<B_max; B+=dB){
+        double s = sigma(B, d_a, d_B_phi, d_B_SO, d_B_e);
+        myfile<<B<<"\t"<<s<<"\n";
     }
+    myfile.close();
+
+    //---
+    std::fstream myfile2;
+    filename = "para_" + filename;
+    myfile2.open(filename.c_str(), std::ios::out);
+    double alpha = d_a/(e*e/2/pi/pi/h_bar);
+    myfile2<<"a = "<<d_a<<"\n";
+    myfile2<<"alpha = "<<alpha<<"\n";
+    myfile2<<"B_phi = "<<d_B_phi<<"\n";
+    myfile2<<"B_SO = "<<d_B_SO<<"\n";
+    myfile2<<"B_e = "<<d_B_e<<"\n";
+
+
     return true;
 }
 
@@ -128,18 +157,26 @@ void MonteCarloFit::setda(double da){
     d_da = da;
 }
 
-void MonteCarloFit::setDtau(double Dtau){
-    d_Dtau = Dtau;
+void MonteCarloFit::setB_phi(double B_phi){
+    d_B_phi = B_phi;
 }
 
-void MonteCarloFit::setDtau_i(double Dtau_i){
-    d_Dtau_i = Dtau_i;
+void MonteCarloFit::setdB_phi(double dB_phi){
+    d_dB_phi = dB_phi;
 }
 
-void MonteCarloFit::setdDtau(double dDtau){
-    d_dDtau = dDtau;
+void MonteCarloFit::setB_SO(double B_SO){
+    d_B_SO = B_SO;
 }
 
-void MonteCarloFit::setdDtau_i(double dDtau_i){
-    d_dDtau_i = dDtau_i;
+void MonteCarloFit::setdB_SO(double dB_SO){
+    d_dB_SO = dB_SO;
+}
+
+void MonteCarloFit::setB_e(double B_e){
+    d_B_e = B_e;
+}
+
+void MonteCarloFit::setdB_e(double dB_e){
+    d_dB_e = dB_e;
 }
